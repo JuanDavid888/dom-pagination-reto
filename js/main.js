@@ -60,12 +60,43 @@ const allButtons = () => { // Lugar para crear botones
     button2.addEventListener('click', () => {
         button1.style.backgroundColor = "#ffffff"
         button2.style.backgroundColor = "#f58133"
+        // Ejecutamos la función para cargar los datos primero
+        getData().then(() => {
+        // Luego de obtener los datos, mostramos los personajes
+        showCharacters2()
+});
     })
     button1.addEventListener('click', () => {
         // Resetear el color de fondo de ambos botones
         button1.style.backgroundColor = "#f58133";
         button2.style.backgroundColor = "#ffffff"; // Aquí cambia el color de fondo del botón 2
+        getData().then(() => {
+            // Luego de obtener los datos, mostramos los personajes
+            showCharacters()
+        });
     });
 
     return [button1, button2]
+}
+
+// Colocamos una función para reemplazar la data de las 4 cartas principales
+const showCharacters2 = () => {
+    const container = document.getElementById('cards-container') // Obtenemos el contenedor padre de las cartas de personajes
+    container.innerHTML = '' // Lo eliminamos
+    characters = characters.slice(4,8) // Definimos 4 personajes para la primer 'página'
+    characters.forEach(chr => { // Dentro de cada personaje, creamos un div y le ponemos la clase 'card'
+        const card = document.createElement('div')
+        card.classList.add('card')
+
+        // Reemplazamos la info ingresando a la clase y colocando la nueva
+        card.innerHTML= `
+        <img class="card-image" src="${chr.images?.[0]}" alt="${chr.name}">
+        <div class="card-content">
+            <h2 class="card-title">${chr.name}</h2>
+            <p class="card-head">Clan: ${chr.personal?.clan || 'Desconocido'}</p>
+            <p class="card-description">Aldea: ${chr.personal.affiliation?.[0] || 'Desconocido'}</p>
+        </div>
+        `
+        container.appendChild(card) // Al contenedor padre, le pasamos esta info para que la retorne y coloque
+    })
 }
