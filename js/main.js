@@ -1,15 +1,16 @@
 const getData = async() => {
-    let url = new URL('https://dattebayo-api.onrender.com/characters')
-    let response = await fetch(url)
+    let url = new URL('https://dattebayo-api.onrender.com/characters') // Traemos la Api dattebayo de los personajes
+    let response = await fetch(url) 
     let result = await response.json()
     console.log("Personajes a utilizar del api:");
-    console.log(result);
+    console.log(result); // Mostramos los personajes a utilizar
 }
 
-const changeCard1 = () => {
-    let img1 = document.getElementById('image1')
-    let img = img1.src = 'https://static.wikia.nocookie.net/naruto/images/d/d6/Naruto_Part_I.png'
-    img1.addEventListener('click',() => {
+// Se declaran funciones para cambiar el contenido de las cartas de los personajes
+const changeCard1 = () => { 
+    let img1 = document.getElementById('image1') // Obtenemos el valor de la imagen por id
+    let img = img1.src = 'https://static.wikia.nocookie.net/naruto/images/d/d6/Naruto_Part_I.png' // Cambiamos el src (dirección de la imagen predeterminada)
+    img1.addEventListener('click',() => { // Al hacer click, cambiamos la iamgen por su segunda opción dependiendo cual esté seleccionada
         if (img1.src === img) {
             img1.src = 'https://static.wikia.nocookie.net/naruto/images/7/7d/Naruto_Part_II.png';
         } else {
@@ -17,14 +18,14 @@ const changeCard1 = () => {
         }
     })
 
-    let title1 = document.getElementById('title1')
-    title1.textContent = 'Naruto Uzumaki'
+    let title1 = document.getElementById('title1') // Accedemos al titulo
+    title1.textContent = 'Naruto Uzumaki' // Cambiamos su valor 
 
-    let clan1 = document.getElementById('clan1')
-    clan1.textContent = 'Clan: Uzumaki'
+    let clan1 = document.getElementById('clan1') // Accedemos al titulo auxiliar
+    clan1.textContent = 'Clan: Uzumaki' // Cambiamos su valor 
 
-    let village1 = document.getElementById('village1')
-    village1.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
+    let village1 = document.getElementById('village1') // Accedemos al texto adicional
+    village1.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)' // Cambiamos su valor 
 }
 
 const changeCard2 = () => {
@@ -62,9 +63,32 @@ const changeCard3 = () => {
     village3.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
 }
 
+const changeCard4 = () => {
+    let img4 = document.getElementById('image4')
+    let img = img4.src = 'https://static.wikia.nocookie.net/naruto/images/2/27/Kakashi_Hatake.png'
+    img4.addEventListener('click',() => {
+        if (img4.src === img) {
+            img4.src = 'https://static.wikia.nocookie.net/naruto/images/2/25/Kakashi_Part_III.png';
+        } else {
+            img4.src = img;
+        }
+    })
+
+    let title4 = document.getElementById('title4')
+    title4.textContent = 'Kakashi Hatake'
+
+    let clan4 = document.getElementById('clan4')
+    clan4.textContent = 'Clan: Uchiha'
+
+    let village4 = document.getElementById('village4')
+    village4.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
+}
+
+// Denominamos los cambios cuando empiece la página
 document.addEventListener('DOMContentLoaded', () => {
     getData()
     changeCard1()
     changeCard2()
     changeCard3()
+    changeCard4()
 })
