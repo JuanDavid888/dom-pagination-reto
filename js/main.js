@@ -36,3 +36,36 @@ getData().then(() => {
     // Luego de obtener los datos, mostramos los personajes
     showCharacters()
 });
+
+// Denominamos los cambios cuando empiece la página
+document.addEventListener('DOMContentLoaded', () => {
+    let buttons = allButtons()
+    buttons.map(btn => pages.appendChild(btn))
+})
+
+// Sección de botones
+let pages = document.getElementById('pagination')
+
+const allButtons = () => { // Lugar para crear botones
+    // Sección agregar
+    let button1 = document.createElement('button')
+    button1.textContent = 1
+    button1.classList.add("button", "btn-opc1")
+
+    let button2 = document.createElement('button')
+    button2.textContent = 2
+    button2.classList.add("button", "btn-opc2")
+
+    // Sección editar
+    button2.addEventListener('click', () => {
+        button1.style.backgroundColor = "#ffffff"
+        button2.style.backgroundColor = "#f58133"
+    })
+    button1.addEventListener('click', () => {
+        // Resetear el color de fondo de ambos botones
+        button1.style.backgroundColor = "#f58133";
+        button2.style.backgroundColor = "#ffffff"; // Aquí cambia el color de fondo del botón 2
+    });
+
+    return [button1, button2]
+}

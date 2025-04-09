@@ -89,19 +89,7 @@
     transition: background-color 0.3s ease;
   }
 
-  .pagination button:hover {
-    background-color: #f0f0f0;
-  }
-
-  .pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
   .pagination .btn-opc1 {
-    background-color: #f58133;
-  }
-  .pagination .btn-opc1:hover {
     background-color: #f58133;
   }
 
