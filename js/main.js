@@ -48,8 +48,23 @@ const changeCard2 = () => {
     village2.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
 }
 
+const changeCard3 = () => {
+    let img3 = document.getElementById('image3')
+    img3.src = 'https://static.wikia.nocookie.net/naruto/images/f/fd/Madara.png'
+
+    let title3 = document.getElementById('title3')
+    title3.textContent = 'Madara Uchiha'
+
+    let clan3 = document.getElementById('clan3')
+    clan3.textContent = 'Clan: Uchiha'
+
+    let village3 = document.getElementById('village3')
+    village3.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     getData()
     changeCard1()
     changeCard2()
+    changeCard3()
 })
