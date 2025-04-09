@@ -55,6 +55,10 @@ const updatePagination = () => {
     button3.textContent = 'Back';
     button3.classList.add("button", "btn-opc3");
 
+    // Si la página actual es mayor que 1, habilitar el botón 'Back'
+    button3.disabled = currentPage <= 1;
+    button2.disabled = currentPage >= totalPages;
+
     // Acción para el botón 'Next' (incrementa la página)
     button2.addEventListener('click', () => {
         if (currentPage < totalPages) { // Verificamos si la página actual es menor que el límite
