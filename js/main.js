@@ -1,102 +1,88 @@
-// Sección de cartas principales
-let url = 'https://dattebayo-api.onrender.com/characters'
-let characters = []
+let url = 'https://dattebayo-api.onrender.com/characters';
+let characters = [];
+let currentPage = 1; // Página actual
+const pageSize = 4; // Número de personajes por página
+const totalPages = 5; // Límite de páginas
 
-const getData = async() => { // Traemos la Api dattebayo de los personajes
-    let response = await fetch(url) 
-    let result = await response.json()
-    characters = result.characters;
-    console.log("Personajes a utilizar del api:");
-    console.log(result); // Mostramos los personajes a utilizar
-}
+// Función para obtener los datos de la API
+const getData = async () => {
+    let response = await fetch(url);
+    let result = await response.json();
+    characters = result.characters; // Definimos que la data del api se almacene en la variable
+};
 
-// Colocamos una función para reemplazar la data de las 4 cartas principales
+// Función para mostrar los personajes según la página actual
 const showCharacters = () => {
-    const container = document.getElementById('cards-container') // Obtenemos el contenedor padre de las cartas de personajes
-    container.innerHTML = '' // Lo eliminamos
-    characters = characters.slice(0,4) // Definimos 4 personajes para la primer 'página'
-    characters.forEach(chr => { // Dentro de cada personaje, creamos un div y le ponemos la clase 'card'
-        const card = document.createElement('div')
-        card.classList.add('card')
+    const container = document.getElementById('cards-container');
+    container.innerHTML = ''; // Limpiamos el contenedor de las cartas
 
-        // Reemplazamos la info ingresando a la clase y colocando la nueva
-        card.innerHTML= `
-        <img class="card-image" src="${chr.images?.[0]}" alt="${chr.name}">
-        <div class="card-content">
-            <h2 class="card-title">${chr.name}</h2>
-            <p class="card-head">Clan: ${chr.personal?.clan || 'Desconocido'}</p>
-            <p class="card-description">Aldea: ${chr.personal.affiliation?.[0] || 'Desconocido'}</p>
-        </div>
-        `
-        container.appendChild(card) // Al contenedor padre, le pasamos esta info para que la retorne y coloque
-    })
-}
-// Ejecutamos la función para cargar los datos primero
-getData().then(() => {
-    // Luego de obtener los datos, mostramos los personajes
-    showCharacters()
-});
+    // Cálculo de los índices según la página actual
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pageCharacters = characters.slice(startIndex, endIndex);
 
-// Denominamos los cambios cuando empiece la página
-document.addEventListener('DOMContentLoaded', () => {
-    let buttons = allButtons()
-    buttons.map(btn => pages.appendChild(btn))
-})
+    // Mostramos los personajes de la página actual
+    pageCharacters.forEach(chr => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+            <img class="card-image" src="${chr.images?.[0]}" alt="${chr.name}">
+            <div class="card-content">
+                <h2 class="card-title">${chr.name}</h2>
+                <p class="card-head">Clan: ${chr.personal?.clan || 'Desconocido'}</p>
+                <p class="card-description">Aldea: ${chr.personal.affiliation?.[0] || 'Desconocido'}</p>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+};
 
-// Sección de botones
-let pages = document.getElementById('pagination')
+// Función para actualizar los botones de paginación
+const updatePagination = () => {
+    const pages = document.getElementById('pagination');
+    pages.innerHTML = ''; // Limpiamos los botones de paginación antes de volver a crearlos
 
-const allButtons = () => { // Lugar para crear botones
-    // Sección agregar
-    let button1 = document.createElement('button')
-    button1.textContent = 1
-    button1.classList.add("button", "btn-opc1")
+    // Crear los botones
+    let button1 = document.createElement('button');
+    button1.textContent = currentPage;
+    button1.classList.add("button", "btn-opc1");
 
-    let button2 = document.createElement('button')
-    button2.textContent = 2
-    button2.classList.add("button", "btn-opc2")
+    let button2 = document.createElement('button');
+    button2.textContent = 'Next';
+    button2.classList.add("button", "btn-opc2");
 
-    // Sección editar
+    let button3 = document.createElement('button');
+    button3.textContent = 'Back';
+    button3.classList.add("button", "btn-opc3");
+
+    // Acción para el botón 'Next' (incrementa la página)
     button2.addEventListener('click', () => {
-        button1.style.backgroundColor = "#ffffff"
-        button2.style.backgroundColor = "#f58133"
-        // Ejecutamos la función para cargar los datos primero
-        getData().then(() => {
-        // Luego de obtener los datos, mostramos los personajes
-        showCharacters2()
-});
-    })
-    button1.addEventListener('click', () => {
-        // Resetear el color de fondo de ambos botones
-        button1.style.backgroundColor = "#f58133";
-        button2.style.backgroundColor = "#ffffff"; // Aquí cambia el color de fondo del botón 2
-        getData().then(() => {
-            // Luego de obtener los datos, mostramos los personajes
-            showCharacters()
-        });
+        if (currentPage < totalPages) { // Verificamos si la página actual es menor que el límite
+            currentPage++;
+            updatePagination();
+            showCharacters();
+        }
     });
 
-    return [button1, button2]
-}
+    // Acción para el botón 'Back' (decrementa la página)
+    button3.addEventListener('click', () => {
+        if (currentPage > 1) { // Verificamos si la página actual es mayor que 1
+            currentPage--;
+            updatePagination();
+            showCharacters();
+        }
+    });
 
-// Colocamos una función para reemplazar la data de las 4 cartas principales
-const showCharacters2 = () => {
-    const container = document.getElementById('cards-container') // Obtenemos el contenedor padre de las cartas de personajes
-    container.innerHTML = '' // Lo eliminamos
-    characters = characters.slice(4,8) // Definimos 4 personajes para la primer 'página'
-    characters.forEach(chr => { // Dentro de cada personaje, creamos un div y le ponemos la clase 'card'
-        const card = document.createElement('div')
-        card.classList.add('card')
+    // Agregar los botones de paginación al contenedor
+    pages.appendChild(button3);
+    pages.appendChild(button1);
+    pages.appendChild(button2);
+};
 
-        // Reemplazamos la info ingresando a la clase y colocando la nueva
-        card.innerHTML= `
-        <img class="card-image" src="${chr.images?.[0]}" alt="${chr.name}">
-        <div class="card-content">
-            <h2 class="card-title">${chr.name}</h2>
-            <p class="card-head">Clan: ${chr.personal?.clan || 'Desconocido'}</p>
-            <p class="card-description">Aldea: ${chr.personal.affiliation?.[0] || 'Desconocido'}</p>
-        </div>
-        `
-        container.appendChild(card) // Al contenedor padre, le pasamos esta info para que la retorne y coloque
-    })
-}
+// Ejecutamos las funciones al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    getData().then(() => {
+        updatePagination(); // Actualizamos la paginación al cargar los datos
+        showCharacters(); // Mostramos los personajes de la página actual
+    });
+});
