@@ -27,8 +27,29 @@ const changeCard1 = () => {
     village1.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
 }
 
+const changeCard2 = () => {
+    let img2 = document.getElementById('image2')
+    let img = img2.src = 'https://static.wikia.nocookie.net/naruto/images/2/21/Sasuke_Part_1.png'
+    img2.addEventListener('click',() => {
+        if (img2.src === img) {
+            img2.src = 'https://static.wikia.nocookie.net/naruto/images/1/13/Sasuke_Part_2.png';
+        } else {
+            img2.src = img;
+        }
+    })
+
+    let title2 = document.getElementById('title2')
+    title2.textContent = 'Sasuke Uchiha'
+
+    let clan2 = document.getElementById('clan2')
+    clan2.textContent = 'Clan: Uchiha'
+
+    let village2 = document.getElementById('village2')
+    village2.textContent = 'Proviene de la Aldea oculta de la hoja (Konohagakure)'
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     getData()
     changeCard1()
+    changeCard2()
 })
