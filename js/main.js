@@ -1,3 +1,4 @@
+// Sección de cartas principales
 const getData = async() => {
     let url = new URL('https://dattebayo-api.onrender.com/characters') // Traemos la Api dattebayo de los personajes
     let response = await fetch(url) 
@@ -51,8 +52,15 @@ const changeCard2 = () => {
 
 const changeCard3 = () => {
     let img3 = document.getElementById('image3')
-    img3.src = 'https://static.wikia.nocookie.net/naruto/images/f/fd/Madara.png'
-
+    let img = img3.src = 'https://static.wikia.nocookie.net/naruto/images/f/fd/Madara.png'
+    img3.addEventListener('click',() => {
+        if (img3.src === img) {
+            img3.src = 'https://i.blogs.es/faf905/actor-de-doblaje-madara-uchiha-naruto-netflix/500_333.jpeg';
+        } else {
+            img3.src = img;
+        }
+    })
+    
     let title3 = document.getElementById('title3')
     title3.textContent = 'Madara Uchiha'
 
@@ -91,4 +99,20 @@ document.addEventListener('DOMContentLoaded', () => {
     changeCard2()
     changeCard3()
     changeCard4()
+    let buttons = addButton()
+    buttons.map(btn => pages.appendChild(btn))
 })
+
+// Sección de botones
+let pages = document.getElementById('pagination')
+
+const addButton = () => { // Lugar para crear botones
+    let button1 = document.createElement('button')
+    button1.textContent = 1
+    button1.classList.add("button", "btn-opc1")
+
+    let button2 = document.createElement('button')
+    button2.textContent = 2
+    button2.classList.add("button", "btn-opc2")
+    return [button1, button2]
+}

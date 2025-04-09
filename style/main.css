@@ -77,7 +77,7 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 2rem;
+    margin-top: 5rem;
   }
 
   .pagination button {
@@ -93,15 +93,16 @@
     background-color: #f0f0f0;
   }
 
-  .pagination button.active {
-    background-color: #6200ee;
-    color: white;
-    border-color: #6200ee;
-  }
-
   .pagination button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .pagination .btn-opc1 {
+    background-color: #f58133;
+  }
+  .pagination .btn-opc1:hover {
+    background-color: #f58133;
   }
 
   @media (max-width: 768px) {
